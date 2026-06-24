@@ -1,63 +1,297 @@
 <!DOCTYPE html>
-<html>
+<html lang="az">
 <head>
-    <title>Bizə Ürək Sözlərini Yaz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPredict AI — Ana Səhifə</title>
+    <style>
+        /* Sənin istədiyin parlaq, milli və müasir rəng palitrası */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            color: #334155;
+            scroll-behavior: smooth; /* Tuşlara basanda səhifənin yumşaq şəkildə aşağı enməsi üçün */
+        }
+
+        /* 🔵 1. ÜST NAVİQASİYA MENYUSU (Açıq Parlaq Mavi) */
+        .navbar {
+            background-color: #00bfff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        /* Naviqasiya Tuşları */
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            border: 2px solid white;
+            padding: 10px 22px;
+            margin-left: 15px;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 30px; /* Yuvarlaq peşəkar tuşlar */
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: white;
+            color: #00bfff;
+            box-shadow: 0 4px 10px rgba(255,255,255,0.4);
+        }
+
+        /* Səhifənin yuxarıdan navbar qədər boşluq buraxması üçün */
+        .content-wrapper {
+            margin-top: 75px;
+        }
+
+        /* 📢 2. BÖYÜK BANNER HİSSƏSİ (HERO SECTION) */
+        .hero {
+            background: linear-gradient(rgba(13, 71, 161, 0.55), rgba(13, 71, 161, 0.55)), 
+                        url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 140px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .hero p {
+            font-size: 22px;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+            opacity: 0.95;
+        }
+
+        /* Bölmələrin Ümumi Dizaynı */
+        .section {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: #0d47a1;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+
+        /* 🟢 3. PLATFORMA HAQQINDA MƏLUMAT KARTLARI (Yarıyaşıl, Yarımavi İnformasiya Bloku) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        /* Yaşıl tərəf - Alqı Satqı */
+        .card-birja { border-top: 6px solid #00e676; }
+        .card-birja h3 { color: #00c853; font-size: 24px; margin-top: 0; }
+
+        /* Mavi tərəf - AI Risk */
+        .card-ai { border-top: 6px solid #ff1744; }
+        .card-ai h3 { color: #d50000; font-size: 24px; margin-top: 0; }
+
+        .card-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #475569;
+        }
+
+        /* 🔴 4. ƏLAQƏ BÖLMƏSİ DİZAYNI */
+        .contact-section {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .contact-info h3 {
+            color: #0d47a1;
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Sadə, təmiz mesaj forması */
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background-color: #f8fafc;
+        }
+
+        .contact-form button {
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3;
+        }
+
+        .contact-form button:hover {
+            background-color: #009ad4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 60px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Bizə Ürək Sözlərini Yaz</h2>
-    <button id="startBtn">Yazmaga basla </button>
-    <p id="status">Status: Gözlənilir...</p>
 
-    <script>
-        const startBtn = document.getElementById('startBtn');
-        const status = document.getElementById('status');
-        const formspreeUrl = https://formspree.io/f/xzdakbql; // Kopyaladığın linki bura yaz
+    <div class="navbar">
+        <div class="logo">🌾 AgroPredict AI</div>
+        <div class="nav-links">
+            <a href="#ana-sehife">🏠 Ana Səhifə</a>
+            <a href="#platforma-haqqinda">📊 Məlumat Paneli</a>
+            <a href="#elaqe">📞 Əlaqədar Şəxslər</a>
+        </div>
+    </div>
 
-        startBtn.onclick = async () => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const mediaRecorder = new MediaRecorder(stream);
-                let audioChunks = [];
+    <div class="content-wrapper">
 
-                mediaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
+        <div id="ana-sehife" class="hero">
+            <h1>AgroPredict AI Platformasına Xoş Gəlmisiniz</h1>
+            <p>Azərbaycan Respublikasının regional aqrar sahələrində risk analitikasının və fermer-şirkət ticarətinin rəqəmsallaşdırılması modeli.</p>
+        </div>
 
-                mediaRecorder.onstop = async () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    status.innerText = "Status: Səs Gmail-ə göndərilir...";
+        <div id="platforma-haqqinda" class="section">
+            <h2 class="section-title">📊 Platformanın Regional Strukturu</h2>
+            <p class="section-subtitle">Süni intellekt dəstəkli elmi araşdırmalar və rəqəmsal birja layihəsinin əsas istiqamətləri</p>
+
+            <div class="grid-container">
+                
+                <div class="info-card card-birja">
+                    <img class="card-image" src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80" alt="Birja">
+                    <div class="card-content">
+                        <h3>🛒 Vasitəçisiz Aqrar Birja</h3>
+                        <p>Bu bölmə regiondakı yerli fermerlərlə (məsələn, Biləsuvar taxıl və pambıq istehsalçıları) ölkənin iri aqrar sənaye şirkətlərini bir araya gətirir. Alıcı və satıcılar heç bir kənar vasitəçi olmadan birbaşa qiymət təkliflərini və məhsul həcmlərini bu rəqəmsal lövhədən izləyə bilirlər.</p>
+                    </div>
+                </div>
+
+                <div class="info-card card-ai">
+                    <img class="card-image" src="https://images.unsplash.com/photo-1628102476695-814a35cf6468?auto=format&fit=crop&w=600&q=80" alt="Süni İntellekt">
+                    <div class="card-content">
+                        <h3>🤖 Süni İntellektli Risk İdarəetməsi</h3>
+                        <p>NASA POWER və Dövlət Statistika Komitəsinin rəsmi çoxillik aqro-iqlim datalarından (yağıntı miqdarı, temperatur və su balansı) istifadə edilərək qurulan simulyasiya modelidir. Fermerlər əkin etməzdən əvvəl məhsulun həmin mövsümdəki quraqlıq və suvarma riskini öncədən görə bilirlər.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="elaqe" class="section">
+            <h2 class="section-title">📞 Əlaqə və Dəstək</h2>
+            <p class="section-subtitle">Müsabiqə layihəsi ilə bağlı rəsmi əlaqədar şəxslər və rəhbərlik</p>
+
+            <div class="contact-section">
+                <div class="contact-grid">
                     
-                    // Formspree-yə göndərmə prosesi
-                    const formData = new FormData();
-                    formData.append('file', audioBlob, 'ses_yazisi.wav');
-                    formData.append('message', 'Yeni 10 dəqiqəlik səs qeydi.');
+                    <div class="contact-info">
+                        <h3>Layihə Heyəti və Təşkilat:</h3>
+                        <p><strong>📍 Təhsil Müəssisəsi:</strong> Biləsuvar rayonu K. Agayev adına Texniki Fənlər Təmayüllü İnstitut-Məktəb-Lisey (TFTİTML)</p>
+                        <p><strong>👤 Tərtibatçı Tələbə:</strong> Aslan Dövlətzadə</p>
+                        <p><strong>👨‍🏫 Elmi Məsləhətçilər və Rəhbərlik:</strong> Mehman Əliyev & Fərail Kazımov</p>
+                        <p><strong>🏆 Müsabiqə:</strong> "Sabahın alimləri" Respublika Müsabiqəsi 2026</p>
+                    </div>
 
-                    const response = await fetch(formspreeUrl, {
-                        method: 'POST',
-                        body: formData,
-                        headers: { 'Accept': 'application/json' }
-                    });
+                    <div class="contact-form">
+                        <input type="text" placeholder="Adınız və Soyadınız">
+                        <input type="email" placeholder="E-poçt ünvanınız">
+                        <textarea rows="4" placeholder="Münsiflər heyəti və ya istifadəçi rəyi..."></textarea>
+                        <button onclick="alert('Rəyiniz uğurla qeydə alındı!')">İmarəti Göndər 🚀</button>
+                    </div>
 
-                    if (response.ok) {
-                        status.innerText = "Status: Səs uğurla Gmail-ə göndərildi!";
-                    } else {
-                        status.innerText = "Status: Göndərmə xətası (Limit ola bilər).";
-                    }
-                };
+                </div>
+            </div>
+        </div>
 
-                mediaRecorder.start();
-                status.innerText = "Status: Səs yazılır... (10 dəqiqə)";
+    </div>
 
-                // 10 dəqiqə = 600,000 millisaniyə
-                setTimeout(() => {
-                    mediaRecorder.stop();
-                    stream.getTracks().forEach(track => track.stop());
-                }, 600000);
+    <footer>
+        © 2026 AgroPredict AI Layihəsi. "Sabahın Alimləri" Müsabiqəsi üçün xüsusi olaraq hazırlanmışdır. Biləsuvar, Azərbaycan.
+    </footer>
 
-            } catch (err) {
-                status.innerText = "Xəta: Mikrofon icazəsi rədd edildi!";
-            }
-        };
-    </script>
 </body>
 </html>
